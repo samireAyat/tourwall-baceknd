@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 
 const tourSchema = mongoose.Schema(
   {
-    title: { type: String },
+    title: ['', Validators.required],   // 👈 این خط مهمه
     description: { type: String, required: true },
     images: [{ type: String }],           // آرایه URL عکس‌ها
     coverImage: { type: String },         // عکس کاور
