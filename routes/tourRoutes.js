@@ -1,44 +1,15 @@
-
 import express from "express";
-import Tour from "../models/Tour.js";
+import { addTour, getTours, getTourById } from "../controllers/tourController.js";
 
 const router = express.Router();
 
-// GET all tours
-router.get("/", async (req, res) => {
-  const tours = await Tour.find();
-  res.json(tours);
-});
+// اضافه کردن تور (POST /api/tours)
+router.post("/", addTour);
 
-// POST add tour
-router.post("/", async (req, res) => {
-  try {
-    const tour = new Tour(req.body);
-    await tour.save();
-    res.status(201).json(tour);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
+// گرفتن لیست تورها (GET /api/tours)
+router.get("/", getTours);
 
-// PUT update tour
-router.put("/:id", async (req, res) => {
-  try {
-    const updated = await Tour.findByIdAndUpdate(req.params.id, req.body, { new: true });
-    res.json(updated);
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
-
-// DELETE tour
-router.delete("/:id", async (req, res) => {
-  try {
-    await Tour.findByIdAndDelete(req.params.id);
-    res.json({ message: "Tour deleted" });
-  } catch (err) {
-    res.status(400).json({ message: err.message });
-  }
-});
+// گرفتن جزئیات یک تور با id (GET /api/tours/:id)
+router.get("/:id", getTourById);
 
 export default router;

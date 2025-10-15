@@ -1,16 +1,20 @@
 import mongoose from "mongoose";
 
-const tourSchema = new mongoose.Schema({
-  id: Number,
-  title: { type: String, required: true },
-  description: String,
-  images: String,
-  coverImage: String,
-  isOrganizational: Boolean,
-  foodAndHome: String,
-  String: String,
-  otherServices: String,
-  route: String,
-});
+const tourSchema = mongoose.Schema(
+  {
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    images: [{ type: String }],           // آرایه URL عکس‌ها
+    coverImage: { type: String },         // عکس کاور
+    isOrganizational: { type: Boolean, default: false },
+    foodAndHome: { type: String },
+    tourPlan: { type: String },
+    otherServices: { type: String },
+    route: { type: String },
+  },
+  { timestamps: true } // تاریخ ایجاد و آپدیت خودکار
+);
 
-export default mongoose.model("Tour", tourSchema);
+const Tour = mongoose.model("Tour", tourSchema);
+export default Tour;
+
