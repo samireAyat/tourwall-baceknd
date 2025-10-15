@@ -1,6 +1,6 @@
 import express from "express";
 import multer from "multer";
-import Tour from "../models/tourModel.js";
+import Tour from "../models/Tour.js";
 
 const router = express.Router();
 
