@@ -53,4 +53,13 @@ router.get("/", (req, res) => {
   res.json({ message: "Tours API works!" });
 });
 
+router.get("/", async (req, res) => {
+  try {
+    const tours = await Tour.find({}); // برگرداندن همه تورها
+    res.json(tours); // ✅ آرایه مستقیم
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+});
+
 export default router; // ✅ حتماً این خط باید باشه
