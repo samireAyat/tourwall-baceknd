@@ -41,5 +41,8 @@ router.post("/", upload.array("images"), async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
+router.get("/", (req, res) => {
+  res.json({ message: "Tours API works!" });
+});
 
 export default router; // ✅ حتماً این خط باید باشه
