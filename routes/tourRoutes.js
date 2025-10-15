@@ -1,18 +1,10 @@
 import express from "express";
 import multer from "multer";
-import Tour from "../models/Tour.js";
-import fs from 'fs';
-import path from 'path';
+import Tour from "../models/tourModel.js";
 
 const router = express.Router();
 
 // تنظیم محل ذخیره فایل‌ها
-
-const uploadDir = path.join(process.cwd(), 'uploads');
-
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, "uploads/"),
   filename: (req, file, cb) => cb(null, Date.now() + "-" + file.originalname),
@@ -49,17 +41,15 @@ router.post("/", upload.array("images"), async (req, res) => {
     res.status(400).json({ message: err.message });
   }
 });
-router.get("/", (req, res) => {
-  res.json({ message: "Tours API works!" });
-});
 
+// مسیر گرفتن همه تورها (GET)
 router.get("/", async (req, res) => {
   try {
-    const tours = await Tour.find({}); // برگرداندن همه تورها
-    res.json(tours); // ✅ آرایه مستقیم
+    const tours = await Tour.find({}); // ✅ همه تورها
+    res.json(tours); // ✅ همیشه آرایه برمی‌گردونه
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 });
 
-export default router; // ✅ حتماً این خط باید باشه
+export default router;
