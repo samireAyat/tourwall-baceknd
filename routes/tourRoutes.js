@@ -52,4 +52,19 @@ router.get("/", async (req, res) => {
   }
 });
 
+// 📍 دریافت جزئیات تور بر اساس ID
+router.get("/:id", async (req, res) => {
+  try {
+    const tour = await Tour.findById(req.params.id);
+    if (!tour) {
+      return res.status(404).json({ message: "Tour not found" });
+    }
+    res.json(tour);
+  } catch (err) {
+    console.error("❌ Error fetching tour:", err);
+    res.status(500).json({ message: err.message });
+  }
+});
+
+
 export default router;
